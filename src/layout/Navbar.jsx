@@ -1,22 +1,39 @@
+// src/layout/Navbar.jsx
 import { NavLink } from "react-router-dom";
 
 function Navbar() {
   return (
-    <header className="navbar">
+    <nav className="navbar">
       <div className="navbar__logo">Task Dashboard</div>
-      <nav className="navbar__links">
-        <NavLink to="/" className="nav-link">
+      <div className="navbar__links">
+        <NavLink 
+          to="/" 
+          className={({ isActive }) => 
+            `nav-link ${isActive ? 'active' : ''}`
+          }
+        >
           Dashboard
         </NavLink>
-        <NavLink to="/add-project" className="nav-link">
+        <NavLink 
+          to="/add-project" 
+          className={({ isActive }) => 
+            `nav-link ${isActive ? 'active' : ''}`
+          }
+        >
           Add Project
         </NavLink>
-        <NavLink to="/add-task" className="nav-link">
+        <NavLink 
+          to="/add-task" 
+          className={({ isActive }) => 
+            `nav-link ${isActive ? 'active' : ''}`
+          }
+        >
           Add Task
         </NavLink>
-      </nav>
-    </header>
+      </div>
+    </nav>
   );
 }
 
 export default Navbar;
+

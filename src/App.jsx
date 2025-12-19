@@ -1,4 +1,4 @@
-// src/App.jsx
+/// src/App.jsx
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
@@ -9,15 +9,12 @@ import AddProject from "./routes/AddProject";
 import AddTask from "./routes/AddTask";
 
 function App() {
-  // ----- STATE -----
   const [projects, setProjects] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const API_URL =
-    "https://69442f687dd335f4c35f8d69.mockapi.io/api/ProjectsManagerv1";
+  const API_URL = "https://69442f687dd335f4c35f8d69.mockapi.io/api/ProjectsManagerv1";
 
-  // ----- FETCH DATA FROM API -----
   useEffect(() => {
     Promise.all([
       fetch(`${API_URL}/Projects`),
@@ -40,10 +37,17 @@ function App() {
       });
   }, []);
 
-  // ----- LOGIC FUNCTIONS (LOCAL STATE) -----
   const addNewProject = (newProject) => {
-    const projectWithId = { ...newProject, id: Date.now().toString() };
-    setProjects((prev) => [...prev, projectWithId]);
+    const projectWithId = { 
+      ...newProject, 
+      id: Date.now().toString(),
+      createdAt: new Date().toISOString()
+    };
+    
+    setProjects((prev) => {
+      const updated = [...prev, projectWithId];
+      return updated;
+    });
   };
 
   const addNewTask = (newTask) => {
@@ -70,7 +74,6 @@ function App() {
     );
   };
 
-  // ----- LOADING SCREEN -----
   if (loading) {
     return (
       <div style={{ textAlign: "center", marginTop: "100px" }}>
@@ -79,11 +82,9 @@ function App() {
     );
   }
 
-  // ----- ROUTES -----
   return (
     <Routes>
       <Route element={<MainLayout />}>
-        {/* Dashboard */}
         <Route
           path="/"
           element={
@@ -95,9 +96,8 @@ function App() {
           }
         />
 
-        {/* Project Tasks */}
         <Route
-          path="/project/:id"
+          path="/projects/:id/tasks"
           element={
             <ProjectTasks
               projects={projects}
@@ -108,24 +108,20 @@ function App() {
           }
         />
 
-        {/* Add Project */}
         <Route
           path="/add-project"
           element={<AddProject onAddProject={addNewProject} />}
         />
 
-        {/* Add Task */}
         <Route
-          path="/add-task"
+          path="/projects/:id/add-task"
           element={
             <AddTask
-              projects={projects}
               onAddTask={addNewTask}
             />
           }
         />
 
-      
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
@@ -133,4 +129,3 @@ function App() {
 }
 
 export default App;
-

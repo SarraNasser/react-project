@@ -1,4 +1,4 @@
-// src/routes/AddProject.jsx
+// src/routes/AddProject.jsx - النسخة القديمة البسيطة
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -11,6 +11,7 @@ function AddProject({ onAddProject }) {
     e.preventDefault();
 
     if (!title.trim()) {
+      alert("Project title is required");
       return;
     }
 
@@ -19,7 +20,9 @@ function AddProject({ onAddProject }) {
       description,
     });
 
-    navigate("/"); 
+    alert("Project added successfully!");
+
+    navigate("/");
   };
 
   return (
@@ -27,7 +30,7 @@ function AddProject({ onAddProject }) {
       <h1>Add Project</h1>
       <form className="form-page__form" onSubmit={handleSubmit}>
         <label>
-          Project Title
+          <span>Project Title</span>
           <input
             type="text"
             name="title"
@@ -37,7 +40,7 @@ function AddProject({ onAddProject }) {
         </label>
 
         <label>
-          Project Description
+          <span>Project Description</span>
           <textarea
             name="description"
             rows={4}

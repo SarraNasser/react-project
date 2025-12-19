@@ -4,12 +4,11 @@ import TaskColumn from "../components/TaskColumn";
 
 function ProjectTasks({ projects, tasks, onDelete, onMove }) {
   const { id } = useParams();
-  const projectId = id; // string
+  const projectId = id;
 
   const currentProject = projects.find(
     (p) => String(p.id) === String(projectId)
   );
-
   const projectTitle = currentProject
     ? currentProject.title
     : `Project ${projectId}`;
@@ -36,7 +35,7 @@ function ProjectTasks({ projects, tasks, onDelete, onMove }) {
   return (
     <div className="project-tasks">
       <header className="project-tasks__header">
-        <h1>{projectTitle}</h1>
+        <h1 className="project-tasks__title">{projectTitle}</h1>
         <Link to="/add-task" className="btn btn-primary">
           + Add Task
         </Link>

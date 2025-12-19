@@ -1,47 +1,51 @@
-function TaskCard({ task, onMove, onDelete }) {
+// src/components/TaskCard.jsx
+import { Link } from "react-router-dom";
+
+function TaskCard({ task, onMoveTask, onDeleteTask }) {
+  const handleMove = (newStatus) => {
+    onMoveTask(task.id, newStatus);
+  };
+
+  const handleDelete = () => {
+    if (window.confirm("Are you sure you want to delete this task?")) {
+      onDeleteTask(task.id);
+    }
+  };
+
   return (
-    <article className="task-card">
-      <h4 className="task-card__title">{task.title}</h4>
-      <p className="task-card__description">{task.description}</p>
-
+    <div className="task-card">
+      <h3 className="task-card__title">{task.title}</h3>
+      {task.description && (
+        <p className="task-card__description">{task.description}</p>
+      )}
+      
       <div className="task-card__actions">
-        {onMove && (
-          <>
-            <button
-              type="button"
-              className="btn btn-xs"
-              onClick={() => onMove("todo")}
-            >
-              To Do
-            </button>
-            <button
-              type="button"
-              className="btn btn-xs"
-              onClick={() => onMove("in-progress")}
-            >
-              In Progress
-            </button>
-            <button
-              type="button"
-              className="btn btn-xs"
-              onClick={() => onMove("done")}
-            >
-              Done
-            </button>
-          </>
-        )}
-
-        {onDelete && (
-          <button
-            type="button"
-            className="btn btn-xs btn-danger"
-            onClick={onDelete}
-          >
-            Delete
-          </button>
-        )}
+        <button
+          className="btn btn-small btn-secondary"
+          onClick={() => handleMove("todo")}
+        >
+          To Do
+        </button>
+        <button
+          className="btn btn-small btn-secondary"
+          onClick={() => handleMove("in-progress")}
+        >
+          In Progress
+        </button>
+        <button
+          className="btn btn-small btn-secondary"
+          onClick={() => handleMove("done")}
+        >
+          Done
+        </button>
+        <button
+          className="btn btn-small btn-danger"
+          onClick={handleDelete}
+        >
+          Delete
+        </button>
       </div>
-    </article>
+    </div>
   );
 }
 
