@@ -1,15 +1,16 @@
-import Navbar from "../components/Navbar";
 import { Outlet } from "react-router-dom";
+import Navbar from "./Navbar";
 
 function MainLayout() {
   return (
-    <>
+    <div className="app-shell">
       <Navbar />
-      <main style={{ padding: "20px" }}>
+      <main className="app-shell__content">
         <Outlet />
       </main>
-    </>
+    </div>
   );
 }
 
 export default MainLayout;
+
