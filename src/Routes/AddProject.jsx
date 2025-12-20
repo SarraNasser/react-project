@@ -1,4 +1,4 @@
-// src/routes/AddProject.jsx - النسخة القديمة البسيطة
+// src/routes/AddProject.jsx 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 

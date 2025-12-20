@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import MainLayout from "./layout/MainLayout";
 import Dashboard from "./routes/Dashboard";
-import ProjectTasks from "./routes/ProjectTasks";
+import ProjectTasks from "./Routes/ProjectTasks";
 import AddProject from "./routes/AddProject";
 import AddTask from "./routes/AddTask";
 
@@ -50,11 +50,14 @@ function App() {
     });
   };
 
-  const addNewTask = (newTask) => {
-    const taskWithId = { ...newTask, id: Date.now().toString() };
-    setTasks((prev) => [...prev, taskWithId]);
-  };
-
+ 
+const addNewTask = (newTask) => {
+  setTasks((prev) => {
+ 
+    const currentTasks = Array.isArray(prev) ? prev : [];
+    return [...currentTasks, newTask];
+  });
+};
   const deleteProject = (projectId) => {
     setProjects((prev) => prev.filter((p) => p.id !== projectId));
     setTasks((prev) =>
@@ -114,11 +117,12 @@ function App() {
         />
 
         <Route
-          path="/projects/:id/add-task"
+          path="/add-task"
           element={
-            <AddTask
-              onAddTask={addNewTask}
-            />
+          <AddTask
+          projects={projects} 
+          onAddTask={addNewTask}
+          />
           }
         />
 

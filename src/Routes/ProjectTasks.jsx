@@ -14,16 +14,38 @@ function ProjectTasks({ projects, tasks, onDelete, onMove }) {
     : `Project ${projectId}`;
 
 
-  const projectTasks = tasks.filter(
+  /*const projectTasks = tasks.filter(
     (t) => String(t.projectId) === String(projectId)
+  ); */
+  /*const projectTasks = Array.isArray(tasks) 
+  ? tasks.filter(t => String(t.projectId) === String(projectId)) 
+  : [];*/
+  const projectTasks = Array.isArray(tasks) 
+    ? tasks.filter((task) => {
+        const cleanTaskId = String(task.projectId).replace(/\D/g, ""); 
+        const cleanUrlId = String(id).replace(/\D/g, "");
+        return cleanTaskId === cleanUrlId;
+      }) 
+    : [];
+// تحويل الحالة لأحرف صغيرة وحذف المسافات للمقارنة بشكل آمن
+  const todo = projectTasks.filter((t) => 
+    t.status?.toLowerCase().replace(/\s/g, "") === "todo"
   );
-
+  
+  const inProgress = projectTasks.filter((t) => 
+    t.status?.toLowerCase().replace(/[\s-]/g, "") === "inprogress"
+  );
+  
+  const done = projectTasks.filter((t) => 
+    t.status?.toLowerCase() === "done"
+  );
+  /*
   const todo = projectTasks.filter((t) => t.status === "todo");
   const inProgress = projectTasks.filter(
     (t) => t.status === "in-progress"
   );
   const done = projectTasks.filter((t) => t.status === "done");
-
+ */
   const handleMoveTask = (taskId, newStatus) => {
     onMove(taskId, newStatus);
   };
@@ -31,12 +53,14 @@ function ProjectTasks({ projects, tasks, onDelete, onMove }) {
   const handleDeleteTask = (taskId) => {
     onDelete(taskId);
   };
-
+console.log("URL ID:", id);
+console.log("First Task Project ID:", tasks[0]?.projectId);
   return (
     <div className="project-tasks">
       <header className="project-tasks__header">
         <h1 className="project-tasks__title">{projectTitle}</h1>
-        <Link to="/add-task" className="btn btn-primary">
+       
+        <Link to={`/add-task`}className="btn btn-primary">
           + Add Task
         </Link>
       </header>
