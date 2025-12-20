@@ -1,4 +1,4 @@
-/// src/App.jsx
+// src/App.jsx
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
@@ -114,9 +114,20 @@ function App() {
         />
 
         <Route
+          path="/add-task"
+          element={
+            <AddTask
+              projects={projects}      // ✅ للـ dropdown
+              onAddTask={addNewTask}
+            />
+          }
+        />
+
+        <Route
           path="/projects/:id/add-task"
           element={
             <AddTask
+              projects={projects}      // ✅ للـ dropdown
               onAddTask={addNewTask}
             />
           }

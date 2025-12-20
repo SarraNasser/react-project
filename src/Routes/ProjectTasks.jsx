@@ -13,15 +13,12 @@ function ProjectTasks({ projects, tasks, onDelete, onMove }) {
     ? currentProject.title
     : `Project ${projectId}`;
 
-
   const projectTasks = tasks.filter(
     (t) => String(t.projectId) === String(projectId)
   );
 
   const todo = projectTasks.filter((t) => t.status === "todo");
-  const inProgress = projectTasks.filter(
-    (t) => t.status === "in-progress"
-  );
+  const inProgress = projectTasks.filter((t) => t.status === "in-progress");
   const done = projectTasks.filter((t) => t.status === "done");
 
   const handleMoveTask = (taskId, newStatus) => {
@@ -36,7 +33,10 @@ function ProjectTasks({ projects, tasks, onDelete, onMove }) {
     <div className="project-tasks">
       <header className="project-tasks__header">
         <h1 className="project-tasks__title">{projectTitle}</h1>
-        <Link to="/add-task" className="btn btn-primary">
+        <Link 
+          to={`/projects/${projectId}/add-task`}  
+          className="btn btn-primary"
+        >
           + Add Task
         </Link>
       </header>
