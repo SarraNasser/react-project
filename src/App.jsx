@@ -6,7 +6,7 @@ import MainLayout from "./layout/MainLayout";
 import Dashboard from "./routes/Dashboard";
 import ProjectTasks from "./Routes/ProjectTasks";
 import AddProject from "./routes/AddProject";
-import AddTask from "./routes/AddTask";
+import AddTask from "./Routes/AddTask";
 
 function App() {
   const [projects, setProjects] = useState([]);

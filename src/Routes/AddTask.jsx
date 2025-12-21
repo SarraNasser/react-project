@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 function AddTask({ projects, onAddTask }) {
   const navigate = useNavigate();
-  
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [selectedProjectId, setSelectedProjectId] = useState("");
@@ -17,65 +17,78 @@ function AddTask({ projects, onAddTask }) {
       return;
     }
 
-    
     const newTask = {
       id: Date.now().toString(),
       title: title,
       description: description,
-      projectId: String(selectedProjectId), 
+      projectId: String(selectedProjectId),
       status: status,
     };
 
-    alert(`Adding Task: ${newTask.title} to Project ID: ${newTask.projectId}`); // 👈 انظري لهذا في الكونسول عند الضغط على Save
-
     onAddTask(newTask);
-
     alert("Task added successfully!");
     navigate(`/projects/${selectedProjectId}/tasks`);
   };
 
   return (
-    <div style={{ padding: "20px", maxWidth: "500px" }}>
-      <h1>Add New Task</h1>
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
-        
-        <label>Task Title:
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} style={{ width: "100%" }} />
+    <div className="form-page">
+      <h1 className="project-tasks__title" style={{ marginBottom: "1.5rem", fontSize: "1.5rem" }}>
+        Add New Task
+      </h1>
+
+      <form onSubmit={handleSubmit} className="form-page__form">
+        <label>
+          <span>Task Title</span>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="What needs to be done?"
+          />
         </label>
 
-        <label>Description:
-          <textarea value={description} onChange={(e) => setDescription(e.target.value)} style={{ width: "100%" }} />
+        <label>
+          <span>Description</span>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Add some details..."
+            rows="4"
+          />
         </label>
 
-        {/* 1. Select Project Dropdown */}
-        <label>Select Project:
-          <select 
-            value={selectedProjectId} 
+        <label>
+          <span>Select Project</span>
+          <select
+            value={selectedProjectId}
             onChange={(e) => setSelectedProjectId(e.target.value)}
-            style={{ width: "100%", padding: "5px" }}
           >
             <option value="">-- Choose a Project --</option>
-            {projects.map(proj => (
-              <option key={proj.id} value={proj.id}>{proj.title}</option>
+            {projects.map((proj) => (
+              <option key={proj.id} value={proj.id}>
+                {proj.title}
+              </option>
             ))}
           </select>
         </label>
 
-        {/* 2. Select Status Dropdown */}
-        <label>Status:
-          <select value={status} onChange={(e) => setStatus(e.target.value)} style={{ width: "100%", padding: "5px" }}>
+        <label>
+          <span>Status</span>
+          <select value={status} onChange={(e) => setStatus(e.target.value)}>
             <option value="To Do">To Do</option>
             <option value="In Progress">In Progress</option>
             <option value="Done">Done</option>
           </select>
         </label>
 
-        <button type="submit" style={{ padding: "10px", backgroundColor: "#28a745", color: "white", border: "none", cursor: "pointer" }}>
-          Save Task
-        </button>
+        <div style={{ marginTop: "1rem" }}>
+          <button type="submit" className="btn btn-primary" style={{ width: "100%" }}>
+            Save Task
+          </button>
+        </div>
       </form>
     </div>
   );
-}
+} // هذا القوس كان مفقوداً أو في مكان خاطئ
 
 export default AddTask;
