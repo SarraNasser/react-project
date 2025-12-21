@@ -1,4 +1,4 @@
-// src/layout/Navbar.jsx
+// src/layout/Navbar.jsx - الأصلي
 import { NavLink } from "react-router-dom";
 
 function Navbar() {
